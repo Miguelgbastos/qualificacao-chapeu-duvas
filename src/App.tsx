@@ -42,7 +42,8 @@ const SLIDES = [
 ];
 
 function parseHash() {
-  const n = Number(window.location.hash.replace("#", ""));
+  const value = window.location.hash.replace(/^#/, "");
+  const n = Number(value.replace(/^slide-/, ""));
   if (Number.isInteger(n) && n >= 1 && n <= SLIDES.length) return n - 1;
   return 0;
 }
@@ -56,7 +57,7 @@ export default function App() {
     const next = Math.max(0, Math.min(SLIDES.length - 1, i));
     setIndex(next);
     setOverview(false);
-    window.location.hash = String(next + 1);
+    window.location.hash = `slide-${next + 1}`;
   }, []);
 
   useEffect(() => {
