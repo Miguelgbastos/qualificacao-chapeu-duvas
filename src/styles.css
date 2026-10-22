@@ -375,6 +375,29 @@ h3 { font-family: "Source Serif 4", serif; color: var(--navy); font-size: 1.35re
 .table tbody tr:hover td { background: #f4efe2; }
 .table tr.on td { background: #fff6de; }
 
+.table-anexo {
+  font-size: 1rem;
+  flex: 1;
+}
+.table-anexo th,
+.table-anexo td {
+  padding: 0.85rem 0.7rem;
+  vertical-align: top;
+  line-height: 1.35;
+}
+.table-anexo th:nth-child(1),
+.table-anexo td:nth-child(1),
+.table-anexo th:nth-child(2),
+.table-anexo td:nth-child(2),
+.table-anexo th:nth-child(3),
+.table-anexo td:nth-child(3) {
+  width: 16%;
+  white-space: nowrap;
+}
+.table-anexo tbody tr { cursor: default; }
+.table-anexo tbody tr:hover td { background: transparent; }
+.table-anexo tbody tr:last-child td { background: #fff6de; }
+
 .chart-row {
   display: flex;
   gap: 1rem;
@@ -434,19 +457,58 @@ h3 { font-family: "Source Serif 4", serif; color: var(--navy); font-size: 1.35re
   border-color: var(--navy);
 }
 
-.gantt { margin-top: 0.5rem; overflow: auto; flex: 1; }
-.gantt-head, .gantt-row {
+.gantt {
+  flex: 1;
+  min-height: 0;
   display: grid;
-  gap: 2px;
-  align-items: center;
-  font-size: 0.62rem;
+  grid-template-rows: auto auto repeat(19, minmax(0, 1fr));
+  gap: 3px;
+  margin-top: 0.4rem;
 }
-.gantt-head { color: var(--muted); margin-bottom: 0.25rem; text-align: center; }
-.gantt-head .now { color: var(--gold); font-weight: 700; }
-.gantt-task { font-size: 0.68rem; color: var(--navy); padding-right: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gantt-row { margin-bottom: 2px; cursor: pointer; }
-.gantt-row.on .gantt-task { font-weight: 700; }
-.cell { height: 14px; background: #ece8dc; border-radius: 3px; }
+.gantt-row {
+  display: grid;
+  grid-template-columns: minmax(19rem, 3.1fr) repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.gantt-months {
+  grid-template-columns: minmax(19rem, 3.1fr) repeat(6, minmax(0, 1fr));
+  cursor: default;
+}
+.gantt-months span,
+.gantt-quinz span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 650;
+  text-align: center;
+}
+.gantt-months span.now { color: var(--gold); font-weight: 700; }
+.gantt-quinz { cursor: default; }
+.gantt-task {
+  color: var(--navy);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.15;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  padding-right: 0.45rem;
+}
+.gantt-row.on .gantt-task { font-weight: 750; }
+.cell {
+  display: block;
+  min-height: 0;
+  background: #e4e0d4;
+  border-radius: 4px;
+}
 .cell.on { background: var(--gold-soft); }
 .gantt-row.on .cell.on { background: var(--gold-mid); }
 

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import {
   ACIONAMENTOS,
+  ANEXO_DESCARGA,
   CENARIOS,
   CONCLUSOES,
+  CRONOGRAMA,
+  CRONOGRAMA_MESES,
   IMPLICACOES,
   METODO_PASSOS,
   OBJETIVOS,
@@ -305,6 +308,37 @@ export function SlideCenarios() {
   );
 }
 
+export function SlideAnexo() {
+  return (
+    <>
+      <p className="kicker">5. Resultados · anexo</p>
+      <h2>Acionamento das estruturas de descarga</h2>
+      <table className="table table-anexo mt">
+        <thead>
+          <tr>
+            <th>Cota inicial (m)</th>
+            <th>Cota máxima atingida (m)</th>
+            <th>Pico de saída total (m³/s)</th>
+            <th>Tomada d’água</th>
+            <th>Vertedouro Tulipa</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ANEXO_DESCARGA.map((linha) => (
+            <tr key={linha.cotaInicial}>
+              <td>{fmt(linha.cotaInicial)}</td>
+              <td>{fmt(linha.cotaMaxima)}</td>
+              <td>{fmt(linha.picoSaida)}</td>
+              <td>{linha.tomada}</td>
+              <td>{linha.tulipa}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
 export function SlideConclusoes() {
   return (
     <>
@@ -363,13 +397,52 @@ export function SlideCapitulo2() {
 }
 
 export function SlideCronograma() {
+  const [ativo, setAtivo] = useState<number | null>(null);
+  const quinzenas = CRONOGRAMA_MESES.flatMap((mes) => [
+    { mes: mes.label, label: "1ª" },
+    { mes: mes.label, label: "2ª" },
+  ]);
+
   return (
     <>
       <p className="kicker">7. Capítulo 2</p>
       <h2>Cronograma</h2>
-      <figure className="figure-full">
-        <img src="/img/cronograma.png" alt="Cronograma da dissertação de outubro de 2026 a março de 2027" />
-      </figure>
+      <div className="gantt" role="table" aria-label="Cronograma da dissertação de outubro de 2026 a março de 2027">
+        <div className="gantt-row gantt-months" role="row">
+          <span>Atividade</span>
+          {CRONOGRAMA_MESES.map((mes) => (
+            <span key={mes.id} className={mes.atual ? "now" : ""}>
+              {mes.label}
+            </span>
+          ))}
+        </div>
+        <div className="gantt-row gantt-quinz" role="row">
+          <span />
+          {quinzenas.map((q) => (
+            <span key={`${q.mes}-${q.label}`}>{q.label}</span>
+          ))}
+        </div>
+        {CRONOGRAMA.map((item, i) => (
+          <button
+            key={item.tarefa}
+            type="button"
+            className={`gantt-row ${ativo === i ? "on" : ""}`}
+            onClick={() => setAtivo(i === ativo ? null : i)}
+          >
+            <span className="gantt-task" title={item.tarefa}>{item.tarefa}</span>
+            {quinzenas.map((q, j) => {
+              const on = j >= item.inicio && j <= item.fim;
+              return (
+                <i
+                  key={`${item.tarefa}-${q.mes}-${q.label}`}
+                  className={`cell ${on ? "on" : ""}`}
+                  aria-label={on ? `${q.mes}, ${q.label} quinzena` : undefined}
+                />
+              );
+            })}
+          </button>
+        ))}
+      </div>
     </>
   );
 }

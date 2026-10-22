@@ -3,6 +3,7 @@ import type { ComponentType } from "react";
 import { SLIDE_META } from "./data";
 import {
   SlideAfluencia,
+  SlideAnexo,
   SlideArea,
   SlideCapa,
   SlideCapitulo2,
@@ -34,6 +35,7 @@ const SLIDES = [
   SlideCotas,
   SlideAfluencia,
   SlideCenarios,
+  SlideAnexo,
   SlideConclusoes,
   SlideLimites,
   SlideCapitulo2,
