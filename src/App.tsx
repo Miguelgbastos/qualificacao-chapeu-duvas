@@ -63,7 +63,7 @@ export default function App() {
   useEffect(() => {
     const onHash = () => setIndex(parseHash());
     window.addEventListener("hashchange", onHash);
-    if (!window.location.hash) window.location.hash = "1";
+    if (!window.location.hash) window.location.hash = "slide-1";
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
