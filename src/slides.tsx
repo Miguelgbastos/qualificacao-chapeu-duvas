@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
+  ACIONAMENTOS,
   CENARIOS,
-  ESTRUTURAS,
   LIMITES,
   METODO_PASSOS,
   OBJETIVOS,
@@ -29,7 +29,7 @@ export function SlideCapa() {
       <div className="cover-meta">
         <div>
           <strong>Mariana Martins Marcelino</strong>
-          <p>Orientanda · PPGEC/UFJF</p>
+          <p>Orientanda · PEC/UFJF</p>
         </div>
         <div>
           <strong>Prof. Dr. Celso Bandeira de Melo Ribeiro</strong>
@@ -197,40 +197,36 @@ export function SlideCotas() {
         <div className="grow">
           <PerfilReservatorio cenario={cenario} />
         </div>
-        <div style={{ width: "44%" }}>
+        <div style={{ width: "48%" }}>
           <table className="table">
             <thead>
               <tr>
-                <th>Estrutura</th>
-                <th>Soleira</th>
-                <th>Largura</th>
+                <th>Cota inicial</th>
+                <th>Cota máxima</th>
+                <th>Dispositivo acionado</th>
               </tr>
             </thead>
             <tbody>
-              {ESTRUTURAS.map((e) => (
-                <tr key={e.nome}>
-                  <td>{e.nome}</td>
-                  <td>{e.soleira}</td>
-                  <td>{e.largura}</td>
-                </tr>
-              ))}
+              {CENARIOS.map((c) => {
+                const acao = ACIONAMENTOS.find((a) => a.id === c.id);
+                return (
+                  <tr
+                    key={c.id}
+                    className={ativo === c.id ? "on" : ""}
+                    onClick={() => setAtivo(c.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td>{fmt(c.cotaInicial)} m</td>
+                    <td>{fmt(c.cotaMaxima)} m</td>
+                    <td>{acao?.dispositivo}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
-          <div className="row mt-sm">
-            {CENARIOS.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                className={`card grow ${ativo === c.id ? "on" : ""}`}
-                onClick={() => setAtivo(c.id)}
-              >
-                <strong>{fmt(c.cotaInicial)} m</strong>
-              </button>
-            ))}
-          </div>
           <p className="note">
-            736,70 m é o nível de controle normal. Tomada d’água: largura hidráulica equivalente de 2,50 m,
-            sem representar a dimensão física real.
+            {ACIONAMENTOS.find((a) => a.id === ativo)?.detalhe} Fonte: dissertação,
+            seções 4.5.1 a 4.5.5 e conclusão.
           </p>
         </div>
       </div>
@@ -243,27 +239,15 @@ export function SlideAfluencia() {
     <>
       <p className="kicker">5. Resultados</p>
       <h2>Afluência ao reservatório</h2>
-      <div className="row mt">
-        <article className="stat grow">
-          <b>288,17 m³/s</b>
-          <span>Pico afluente em 26/02/2026, às 06h22, igual nos quatro cenários</span>
-        </article>
-        <article className="stat grow">
-          <b>S1 · 59,11 m³/s</b>
-          <span>Maior pico entre as sub-bacias · 20,0 km²</span>
-        </article>
-      </div>
-      <div className="row mt">
-        <article className="card grow">
-          <p className="kicker">S2, S4 e S7</p>
-          <strong>50,9 a 52,9 m³/s</strong>
-          <p>Áreas de 65,7 a 69,6 km²</p>
-        </article>
-        <article className="card grow">
-          <p className="kicker">Picos no evento</p>
-          <strong>23, 24 e 26/02</strong>
-          <p>A área não explica sozinha a resposta</p>
-        </article>
+      <div className="cta-wrap">
+        <a
+          className="cta"
+          href="https://projeto-sub-bacias.vercel.app/#afluencia"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Abrir o painel de afluência
+        </a>
       </div>
     </>
   );
@@ -304,16 +288,16 @@ export function SlideCenarios() {
           ))}
         </tbody>
       </table>
-      <div className="row mt" style={{ flex: 1, minHeight: 0 }}>
+      <div className="chart-row">
         <div className="grow">
           <BarrasCenarios ativo={ativo} onSelect={setAtivo} />
         </div>
-        <article className="stat" style={{ width: "28%" }}>
+        <article className="stat chart-stat">
           <b>{fmt(cenario.picoSaida)} m³/s</b>
           <span>Pico de saída · cenário {cenario.id} · intervalo {cenario.intervalo}</span>
         </article>
       </div>
-      <p className="note">
+      <p className="note note-foot">
         Fonte: dissertação, Tabela 7 e seção 4.5 (pp. 63–64). Os picos de entrada e saída não são simultâneos.
       </p>
     </>
@@ -398,7 +382,7 @@ export function SlideObrigada() {
       <div>
         <h1>Obrigada!</h1>
         <div className="gold-line" style={{ marginInline: "auto" }} />
-        <p>Mariana Martins Marcelino · PPGEC/UFJF</p>
+        <p>Mariana Martins Marcelino · PEC/UFJF</p>
       </div>
     </div>
   );

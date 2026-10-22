@@ -48,24 +48,50 @@ function parseHash() {
   return 0;
 }
 
+function renderSlide(i: number, go: (n: number) => void) {
+  if (i === 1) return <SlideSumario go={go} />;
+  const Slide = SLIDES[i] as ComponentType;
+  return <Slide />;
+}
+
 export default function App() {
   const [index, setIndex] = useState(parseHash);
+  const [leaving, setLeaving] = useState<number | null>(null);
+  const [dir, setDir] = useState<1 | -1>(1);
   const [overview, setOverview] = useState(false);
   const [help, setHelp] = useState(false);
 
-  const go = useCallback((i: number) => {
-    const next = Math.max(0, Math.min(SLIDES.length - 1, i));
-    setIndex(next);
+  const moveTo = useCallback((next: number) => {
+    setIndex((curr) => {
+      if (next === curr) return curr;
+      setDir(next > curr ? 1 : -1);
+      setLeaving(curr);
+      return next;
+    });
     setOverview(false);
-    window.location.hash = `slide-${next + 1}`;
   }, []);
 
+  const go = useCallback((i: number) => {
+    const next = Math.max(0, Math.min(SLIDES.length - 1, i));
+    moveTo(next);
+    const hash = `slide-${next + 1}`;
+    if (window.location.hash !== `#${hash}`) {
+      window.location.hash = hash;
+    }
+  }, [moveTo]);
+
   useEffect(() => {
-    const onHash = () => setIndex(parseHash());
+    const onHash = () => moveTo(parseHash());
     window.addEventListener("hashchange", onHash);
     if (!window.location.hash) window.location.hash = "slide-1";
     return () => window.removeEventListener("hashchange", onHash);
-  }, []);
+  }, [moveTo]);
+
+  useEffect(() => {
+    if (leaving === null) return;
+    const t = window.setTimeout(() => setLeaving(null), 580);
+    return () => window.clearTimeout(t);
+  }, [leaving, index]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -102,11 +128,21 @@ export default function App() {
           <i style={{ width: `${((index + 1) / SLIDES.length) * 100}%` }} />
         </div>
 
-        <section className={`slide on ${index === 0 ? "cover" : ""}`}>
-          {index === 1 ? <SlideSumario go={go} /> : (() => {
-            const Slide = SLIDES[index] as ComponentType;
-            return <Slide />;
-          })()}
+        {leaving !== null && leaving !== index && (
+          <section
+            className={`slide leave ${dir === 1 ? "to-left" : "to-right"} ${leaving === 0 ? "cover" : ""}`}
+            aria-hidden
+          >
+            {renderSlide(leaving, go)}
+          </section>
+        )}
+        <section
+          className={`slide ${leaving === null ? "on" : `enter ${dir === 1 ? "from-right" : "from-left"}`} ${index === 0 ? "cover" : ""}`}
+          onAnimationEnd={(e) => {
+            if (e.currentTarget === e.target) setLeaving(null);
+          }}
+        >
+          {renderSlide(index, go)}
         </section>
 
         <button type="button" className="hit prev" aria-label="Slide anterior" onClick={() => go(index - 1)} />

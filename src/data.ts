@@ -63,13 +63,26 @@ export const METODO_PASSOS = [
   },
 ];
 
-export const ESTRUTURAS = [
-  { nome: "Tulipa (serviço)", soleira: "741,00 m", largura: "46,40 m" },
-  { nome: "Emergência", soleira: "744,25 m", largura: "220,00 m" },
+export const ACIONAMENTOS = [
   {
-    nome: "Tomada d’água (equivalente)",
-    soleira: "736,70 m",
-    largura: "2,50 m",
+    id: 1,
+    dispositivo: "Somente a tomada d’água",
+    detalhe: "Cota máxima 1,62 m abaixo da soleira da Tulipa. Sem descarga pelo vertedouro de serviço nem pelo de emergência.",
+  },
+  {
+    id: 2,
+    dispositivo: "Somente a tomada d’água",
+    detalhe: "Cota máxima de 740,22 m, ainda abaixo da soleira de 741,00 m da Tulipa.",
+  },
+  {
+    id: 3,
+    dispositivo: "Somente a tomada d’água",
+    detalhe: "Cota máxima de 740,68 m, abaixo da soleira da Tulipa durante todo o evento.",
+  },
+  {
+    id: 4,
+    dispositivo: "Tomada d’água e Tulipa",
+    detalhe: "Nível máximo de 741,16 m, 0,16 m acima da soleira. A Tulipa descarregou cerca de 3 m³/s. A emergência não foi acionada.",
   },
 ];
 
