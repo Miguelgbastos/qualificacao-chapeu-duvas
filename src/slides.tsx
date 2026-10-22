@@ -2,7 +2,8 @@ import { useState } from "react";
 import {
   ACIONAMENTOS,
   CENARIOS,
-  LIMITES,
+  CONCLUSOES,
+  IMPLICACOES,
   METODO_PASSOS,
   OBJETIVOS,
   TOC,
@@ -305,21 +306,16 @@ export function SlideCenarios() {
 }
 
 export function SlideConclusoes() {
-  const itens = [
-    "O reservatório apresentou amortecimento expressivo dos picos de vazão nas condições simuladas.",
-    "Cotas iniciais mais altas resultaram em maiores vazões defluentes e menor intervalo entre os picos afluente e defluente.",
-    "Somente o cenário iniciado na cota de 740,00 m ultrapassou a soleira do vertedouro Tulipa durante o evento.",
-    "Os resultados evidenciam a importância das condições iniciais de armazenamento para a resposta hidrológica do reservatório.",
-  ];
   return (
     <>
       <p className="kicker">6. Conclusões</p>
-      <h2>Síntese dos resultados</h2>
-      <div className="goals">
-        {itens.map((texto, i) => (
-          <article key={texto} className="goal">
+      <h2>Conclusão</h2>
+      <div className="conclusoes">
+        {CONCLUSOES.map((item, i) => (
+          <article key={item.titulo} className="conclusao">
             <span>0{i + 1}</span>
-            <p>{texto}</p>
+            <h3>{item.titulo}</h3>
+            <p>{item.texto}</p>
           </article>
         ))}
       </div>
@@ -331,16 +327,18 @@ export function SlideLimites() {
   return (
     <>
       <p className="kicker">6. Conclusões</p>
-      <h2>Alcance e limitações dos resultados</h2>
-      <div className="row mt" style={{ flex: 1 }}>
-        {LIMITES.map((item) => (
-          <article key={item.titulo} className="card grow">
+      <h2>Cota inicial e implicações</h2>
+      <div className="conclusoes">
+        {IMPLICACOES.map((item, i) => (
+          <article key={item.titulo} className="conclusao">
+            <span>0{i + 1}</span>
             <h3>{item.titulo}</h3>
-            <p className="mt-sm">{item.texto}</p>
+            {item.textos.map((texto) => (
+              <p key={texto}>{texto}</p>
+            ))}
           </article>
         ))}
       </div>
-      <p className="note">Fonte: dissertação, seções 3.4.2 e 4.6, conclusão e Apêndice B.</p>
     </>
   );
 }

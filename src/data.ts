@@ -11,8 +11,8 @@ export const SLIDE_META = [
   { id: "cotas", section: "4. Metodologia", title: "Cotas iniciais" },
   { id: "afluencia", section: "5. Resultados", title: "Afluência" },
   { id: "cenarios", section: "5. Resultados", title: "Comparação dos cenários" },
-  { id: "conclusoes", section: "6. Conclusões", title: "Síntese" },
-  { id: "limites", section: "6. Conclusões", title: "Alcance e limitações" },
+  { id: "conclusoes", section: "6. Conclusões", title: "Conclusão" },
+  { id: "limites", section: "6. Conclusões", title: "Cota inicial e implicações" },
   { id: "capitulo2", section: "7. Capítulo 2", title: "Objetivos" },
   { id: "cronograma", section: "7. Capítulo 2", title: "Cronograma" },
   { id: "obrigada", section: "Encerramento", title: "Obrigada" },
@@ -101,21 +101,43 @@ export const CENARIOS: Cenario[] = [
   { id: 4, cotaInicial: 740.0, picoSaida: 29.05, cotaMaxima: 741.16, intervalo: "23h44" },
 ];
 
-export const LIMITES = [
+export const CONCLUSOES = [
   {
-    titulo: "Representação conceitual",
+    titulo: "Eficácia da modelagem com dados de satélite",
     texto:
-      "As estruturas de descarga incluem uma tomada d’água equivalente, sem calibração hidráulica com dados observados.",
+      "A integração do HEC-HMS 4.12 com as estimativas de precipitação do IMERG Late Run mostrou-se uma alternativa viável para a modelagem chuva-vazão na bacia de Chapéu d’Uvas durante o evento extremo de fevereiro de 2026, contribuindo para suprir a carência de dados de monitoramento convencional.",
   },
   {
-    titulo: "Validação e sensibilidade",
+    titulo: "Heterogeneidade da resposta espacial",
     texto:
-      "Confrontar níveis e vazões com observações, avaliar as condições operacionais e os avisos de discretização dos trechos R1 a R4.",
+      "A divisão da bacia em 11 sub-bacias revelou respostas hidrológicas distintas. As vazões de pico foram influenciadas pela distribuição espaço-temporal da precipitação e pelos parâmetros de perdas e transformação, além da área de drenagem de cada unidade.",
   },
   {
-    titulo: "Efeitos a jusante",
+    titulo: "Capacidade de amortecimento do reservatório",
     texto:
-      "A redução dos picos simulados não quantifica a redução de inundações urbanas. Essa análise depende dos tributários e da propagação hidráulica.",
+      "Para um pico afluente de 288,17 m³/s, as vazões máximas defluentes variaram entre 12,04 e 29,05 m³/s nos cenários simulados. Esses resultados evidenciam a capacidade do reservatório de armazenar temporariamente parte do volume afluente e atenuar os picos de cheia.",
+  },
+];
+
+export const IMPLICACOES = [
+  {
+    titulo: "Influência da cota inicial",
+    textos: [
+      "A comparação entre as cotas iniciais de 736,70 m, 738,00 m, 739,00 m e 740,00 m demonstrou que o nível prévio do reservatório influencia diretamente a resposta da cheia a jusante.",
+      "Níveis iniciais mais elevados produziram maiores vazões máximas de saída e menor intervalo entre os picos afluente e defluente, evidenciando a influência da disponibilidade inicial de armazenamento no amortecimento da cheia.",
+    ],
+  },
+  {
+    titulo: "Acionamento do vertedouro de serviço",
+    textos: [
+      "Sob os parâmetros adotados e a condição antecedente úmida ARC III, apenas o cenário com cota inicial de 740,00 m apresentou elevação do nível de água suficiente para ultrapassar a soleira do vertedouro de serviço do tipo Tulipa.",
+    ],
+  },
+  {
+    titulo: "Implicação dos resultados",
+    textos: [
+      "As simulações reforçam a importância de considerar conjuntamente a distribuição da chuva, as características das sub-bacias e o nível inicial do reservatório na avaliação de cheias e de seus efeitos a jusante. As conclusões se referem ao evento e às condições de modelagem analisados.",
+    ],
   },
 ];
 

@@ -298,6 +298,37 @@ h3 { font-family: "Source Serif 4", serif; color: var(--navy); font-size: 1.35re
 }
 .goal span { display: block; color: var(--gold); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.35rem; }
 
+.conclusoes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+  flex: 1;
+  min-height: 0;
+}
+.conclusao {
+  background: var(--white);
+  border-left: 4px solid var(--gold-mid);
+  padding: 0.72rem 1.05rem;
+  border-radius: 0 14px 14px 0;
+}
+.conclusao span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+.conclusao h3 { font-size: 1.12rem; line-height: 1.2; }
+.conclusao p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-top: 0.28rem;
+}
+.conclusao p + p { margin-top: 0.4rem; }
+
 .area { display: grid; grid-template-columns: 1.35fr 0.85fr; gap: 1.1rem; margin-top: 0.8rem; min-height: 0; flex: 1; }
 .area img { width: 100%; height: 100%; object-fit: contain; background: var(--white); border-radius: 16px; border: 1px solid var(--line); }
 .facts { display: grid; gap: 0.7rem; }
