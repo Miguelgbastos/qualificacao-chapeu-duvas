@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import type { ComponentType } from "react";
 import { SLIDE_META } from "./data";
 import {
   SlideAfluencia,
@@ -102,7 +103,7 @@ export default function App() {
 
         <section className={`slide on ${index === 0 ? "cover" : ""}`}>
           {index === 1 ? <SlideSumario go={go} /> : (() => {
-            const Slide = SLIDES[index];
+            const Slide = SLIDES[index] as ComponentType;
             return <Slide />;
           })()}
         </section>
